@@ -31,6 +31,7 @@ public final class FileStorage {
                 for (MethodTrace root: roots)
                     saveMethodTrace(dos, root);
             }
+            dos.flush();
         }
     }
 
@@ -72,7 +73,7 @@ public final class FileStorage {
         List<MethodTrace> children = new ArrayList<>(childrenSize);
         MethodTrace trace = new MethodTrace(parent, name, args, children);
         for (int i = 0; i < childrenSize; i++)
-            children.add(readMethodTrace(dis, trace));
+            readMethodTrace(dis, trace);
         return trace;
     }
 }
