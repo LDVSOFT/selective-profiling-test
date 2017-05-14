@@ -1,5 +1,7 @@
 package org.jetbrains.test;
 
+import org.jetbrains.test.tracer.TraceGuard;
+
 import java.util.List;
 import java.util.Random;
 
@@ -37,47 +39,41 @@ public class DummyApplication {
     }
 
     private void abc(String s) {
-        //your code here
-
-        sleep();
-        if (stop()) {
-            //do nothing
-        }
-        else if (nextBoolean()) {
-            def(nextArg());
-        }
-        else {
-            xyz(nextArg());
+        try (TraceGuard ignored = new TraceGuard("abc", s)) {
+            sleep();
+            if (stop()) {
+                //do nothing
+            } else if (nextBoolean()) {
+                def(nextArg());
+            } else {
+                xyz(nextArg());
+            }
         }
     }
 
     private void def(String s) {
-        //your code here
-
-        sleep();
-        if (stop()) {
-            //do nothing
-        }
-        else if (nextBoolean()) {
-            abc(nextArg());
-        }
-        else {
-            xyz(nextArg());
+        try (TraceGuard ignored = new TraceGuard("def", s)) {
+            sleep();
+            if (stop()) {
+                //do nothing
+            } else if (nextBoolean()) {
+                abc(nextArg());
+            } else {
+                xyz(nextArg());
+            }
         }
     }
 
     private void xyz(String s) {
-        //your code here
-
-        sleep();
-        if (stop()) {
-            //do nothing
-        }
-        else if (nextBoolean()) {
-            abc(nextArg());
-        }
-        else {
-            def(nextArg());
+        try (TraceGuard ignored = new TraceGuard("xyz", s)) {
+            sleep();
+            if (stop()) {
+                //do nothing
+            } else if (nextBoolean()) {
+                abc(nextArg());
+            } else {
+                def(nextArg());
+            }
         }
     }
 
